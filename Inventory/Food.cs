@@ -17,11 +17,15 @@ namespace ConsoleRpg.Inventory
             Nutrition = nutrition;
         }
 
-        //public void Effect(Player player)
-        //{
-        //    player.Health += Nutrition;
-        //}
+        public virtual void ApplyEffect(Player player)
+        {
+            player.Health += Nutrition;
+            if (player.Health > player.MaxHealth)
+            { player.Health = player.MaxHealth; }
+            
+            Console.WriteLine($"{player.Name} ate {Name} and gained {Nutrition} health.");
+        }
 
-       
+
     }
 }

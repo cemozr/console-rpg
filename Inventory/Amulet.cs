@@ -8,11 +8,11 @@ namespace ConsoleRpg.Inventory
 {
     public class Amulet : Equipment
     {
-        public int Health { get; private set; }
+        public int MaxHealth { get; private set; }
 
-        public Amulet(string name, string description, int price, int health, int levelRequirement) : base(name, description, price, levelRequirement)
+        public Amulet(string name, string description, int price, int maxHealth, int levelRequirement) : base(name, description, price, levelRequirement)
         {
-            Health = health;
+            MaxHealth = maxHealth;
         }
     }
 }

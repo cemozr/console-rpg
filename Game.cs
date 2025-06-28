@@ -8,15 +8,12 @@ namespace ConsoleRpg
 {
     public class Game
     {
-        public string getName {  get; private set; }
-        public int getAge { get; private set; }
-        public int getStory {  get; private set; }
-        public int getJob {  get; private set; }
+        //public string getName {  get; private set; }
+        //public int getAge { get; private set; }
+        //public int getStory {  get; private set; }
+        //public int getJob {  get; private set; }
 
-        public Game()
-        {
-
-        }
+       
 
     }
 }

@@ -9,20 +9,18 @@ namespace ConsoleRpg.Characters
 {
     public class Player : Character
     {
-        public List<object> EquippedItems { get; set; } = new List<object>();
-        public Player(string name, int lvl, int exp, string description, int maxHealth, int gold, int attack, int armor, List<object> inventory) : base(name, lvl, exp, description, maxHealth, gold, attack, armor, inventory) { }
+        public List<Equipment> EquippedItems { get; set; } = new List<Equipment>();
+
+        public int Exp { get; set; } = 0;
+        public Player(string name, int lvl, string description, int maxHealth, int gold, int attack, int armor, List<object> inventory) : base(name, lvl, description, maxHealth, gold, attack, armor, inventory) { }
 
         public void Eat(Food food)
         {
             if (Inventory.Contains(food))
             {
-                Health += food.Nutrition;
-                if (Health > MaxHealth)
-                {
-                    Health = MaxHealth; // Ensure health does not exceed max health
-                }
+               food.ApplyEffect(this);
                 Inventory.Remove(food);
-                Console.WriteLine($"{Name} ate {food.Name} and gained {food.Nutrition} health.");
+              
             }
             else
             {
@@ -33,92 +31,103 @@ namespace ConsoleRpg.Characters
         {
             if (Inventory.Contains(potion))
             {
-                switch (potion.EffectType)
-                {
-                    case "heal":
-                        if (Health != MaxHealth)
-                        {
-                            Health += potion.EffectValue;
-                            if (Health > MaxHealth)
-                            {
-                                Health = MaxHealth; // Ensure health does not exceed max health
-                            }
-                            Console.WriteLine($"{Name} drank {potion.Name} and gained {potion.EffectValue} health.");
-                        }
-                        else
-                        {
-                            Console.WriteLine($"{Name} is already at full health.");
-                        }
-                        break;
-                    case "increase attack":
-                        Attack += potion.EffectValue;
-                        Console.WriteLine($"{Name} drank {potion.Name} and increased attack by {potion.EffectValue}.");
-                        break;
-                    case "increase armor":
-                        Armor += potion.EffectValue;
-                        Console.WriteLine($"{Name} drank {potion.Name} and increased armor by {potion.EffectValue}.");
-                        break;
-                    default:
-                        break;
-                }
+               potion.ApplyEffect(this);
+                Inventory.Remove(potion);
+                
 
+            }
+            else
+            {
+                Console.WriteLine($"{Name} does not have {potion.Name} in their inventory.");
             }
         }
         public void Equip(Equipment equipment)
         {
-            if (Inventory.Contains(equipment))
+            if (!Inventory.Contains(equipment))
             {
-                if (equipment.LevelRequirement <= this.Lvl)
-                {
-                    if (equipment.Durability > 0)
-                    {
-                        // Assuming the item has properties like AttackBoost and ArmorBoost  
-                        if (equipment is Weapon weapon)
-                        {
-                            if (EquippedItems.OfType<Weapon>().Any())
-                            {
-                                EquippedItems.RemoveAll(w => w is Weapon);
-                            }
-                            Attack += weapon.Attack;
+                Console.WriteLine($"{Name} does not have {equipment.Name} in their inventory.");
+                return;
+            }
 
-                            Console.WriteLine($"{Name} equipped {weapon.Name} and increased attack by {weapon.Attack}.");
-                        }
-                        if (equipment is Amulet amulet)
-                        {
-                            if (EquippedItems.OfType<Amulet>().Any())
-                            {
-                                EquippedItems.RemoveAll(a => a is Amulet);
-                            }
-                            MaxHealth += amulet.Health;
-                            Console.WriteLine($"{Name} equipped {amulet.Name} and increased max health by {amulet.Health}.");
-                        }
-                        else if (equipment is Armor armor)
-                        {
-                            if (EquippedItems.OfType<Armor>().Any())
-                            {
-                                EquippedItems.RemoveAll(a => a is Armor);
-                            }
-                            Armor += armor.Defence;
-                            Console.WriteLine($"{Name} equipped {armor.Name} and increased armor by {armor.Defence}.");
-                        }
-                        Inventory.Remove(equipment);
-                        EquippedItems.Add(equipment);
-                    }
-                    else
-                    {
-                        Console.WriteLine($"{equipment.Name} is broken and cannot be equipped.");
-                    }
-                }
-                else
-                {
-                    Console.WriteLine($"{Name} does not meet the level requirement to equip {equipment.Name}.");
-                }
+            if (equipment.LevelRequirement > this.Lvl)
+            {
+                Console.WriteLine($"{Name} does not meet the level requirement to equip {equipment.Name}.");
+                return;
+            }
+
+            if (equipment.Durability <= 0)
+            {
+                Console.WriteLine($"{equipment.Name} is broken and cannot be equipped.");
+                return;
+            }
+
+            Equipment? oldEquipment = null;
+            if (equipment is Weapon)
+                oldEquipment = EquippedItems.OfType<Weapon>().FirstOrDefault();
+            if (equipment is Amulet)
+                oldEquipment = EquippedItems.OfType<Amulet>().FirstOrDefault();
+            if (equipment is Armor)
+                oldEquipment = EquippedItems.OfType<Armor>().FirstOrDefault();
+
+            if (oldEquipment != null)
+            {
+
+                if (oldEquipment is Weapon oldWeapon)
+                    Attack -= oldWeapon.Attack;
+                if (oldEquipment is Amulet oldAmulet)
+                    MaxHealth -= oldAmulet.MaxHealth;
+                if (oldEquipment is Armor oldArmor)
+                    Armor -= oldArmor.Defence;
+                EquippedItems.Remove(oldEquipment);
+                Inventory.Add(oldEquipment);
+            }
+            if (equipment is Weapon weapon)
+            {
+                Attack += weapon.Attack;
+            }
+            else if (equipment is Amulet amulet)
+            {
+                MaxHealth += amulet.MaxHealth;
+            }
+            else if (equipment is Armor armor)
+            {
+                Armor += armor.Defence;
+            }
+
+            EquippedItems.Add(equipment);
+            Inventory.Remove(equipment);
+
+
+
+
+
+        }
+        public void Buy(Item item)
+        {
+            if (Gold > item.Price)
+            {
+                Inventory.Add(item);
+                Gold -= item.Price;
+                Console.WriteLine($"{Name} bought {item.Name} for {item.Price} golds ");
+
             }
             else
             {
-                Console.WriteLine($"{Name} does not have {equipment.Name} in their inventory.");
+                Console.WriteLine($"You do not have enough gold to buy {item.Name}.");
             }
         }
+        public void Sell(Item item, Npc npc)
+        {
+            if(Inventory.Contains(item) && npc.Gold >= item.Price )
+            {
+                Inventory.Remove(item);
+                Gold += item.Price;
+                npc.Gold -= item.Price;
+                npc.Inventory.Add(item);
+                Console.WriteLine($"{Name} sold {item.Name} to {npc.Name} for {item.Price} golds.");
+            }
+        }
+        }
     }
-}
+
 

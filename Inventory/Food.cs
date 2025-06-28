@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ConsoleRpg.Characters;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -9,17 +10,17 @@ namespace ConsoleRpg.Inventory
     public class Food : Item
     {
 
-      
-       
+      public int Nutrition { get; private set; }
+
         public Food (string name, string description, int price, int nutrition ) : base (name, description, price)
         {
-
+            Nutrition = nutrition;
         }
 
-        public void Eat()
-        {
-
-        }
+        //public void Effect(Player player)
+        //{
+        //    player.Health += Nutrition;
+        //}
 
        
     }

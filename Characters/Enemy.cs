@@ -13,7 +13,7 @@ namespace ConsoleRpg.Characters
 
 
         public int Exp { get; set; }
-        public Enemy(string name, int lvl, string description,  int maxHealth, int gold, int attack, int armor, List<object> inventory) :base(name, lvl, description, maxHealth, gold, attack, armor, inventory) {
+        public Enemy(string name, int lvl, string description, int gold, List<object> inventory) :base(name, lvl, description, gold, inventory) {
 
             Exp = Lvl * 100;
         }

@@ -19,16 +19,16 @@ namespace ConsoleRpg.Characters
         public List<object> Inventory { get; set; }
         public int Attack { get; set; }
         public int Armor { get; set; }
-        public Character(string name, int lvl, string description, int maxHealth, int gold, int attack , int armor, List<object> inventory) {
+        public Character(string name, int lvl, string description, int gold , List<object> inventory) {
 
         Id = Guid.NewGuid();
         Name = name;
         Description = description;
         Lvl = lvl;
-        MaxHealth = maxHealth;
-        Health = maxHealth;
-        Attack = attack;
-        Armor = armor;
+        MaxHealth = Lvl * 100;
+        Health = MaxHealth;
+        Attack = Lvl * 10;
+        Armor = Lvl * 10;
         Gold = gold ;
         Inventory = inventory;
         }

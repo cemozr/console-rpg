@@ -12,7 +12,7 @@ namespace ConsoleRpg.Characters
         public List<Equipment> EquippedItems { get; set; } = new List<Equipment>();
 
         public int Exp { get; set; } = 0;
-        public Player(string name, int lvl, string description, int maxHealth, int gold, int attack, int armor, List<object> inventory) : base(name, lvl, description, maxHealth, gold, attack, armor, inventory) { }
+        public Player(string name, int lvl, string description, int gold, List<object> inventory) : base(name, lvl, description, gold, inventory) { }
 
         public void Eat(Food food)
         {

@@ -11,7 +11,10 @@ namespace ConsoleRpg.Inventory
         public int LevelRequirement { get; set; }
         public int Durability { get; set; }
         public bool IsEquipped { get; set; }
-        public Equipment(string name, string description, int price, int levelRequirement):base(name,description,price) { 
+
+        public Equipment(string name, string description, int price, int levelRequirement)
+            : base(name, description, price)
+        {
             LevelRequirement = levelRequirement;
             Durability = 100;
             IsEquipped = false;

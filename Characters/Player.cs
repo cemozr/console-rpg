@@ -1,9 +1,9 @@
-﻿using ConsoleRpg.Inventory;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using ConsoleRpg.Inventory;
 
 namespace ConsoleRpg.Characters
 {
@@ -12,35 +12,36 @@ namespace ConsoleRpg.Characters
         public List<Equipment> EquippedItems { get; set; } = new List<Equipment>();
 
         public int Exp { get; set; } = 0;
-        public Player(string name, int lvl, string description, int gold, List<object> inventory) : base(name, lvl, description, gold, inventory) { }
+
+        public Player(string name, int lvl, string description, int gold, List<Item> inventory)
+            : base(name, lvl, description, gold, inventory) { }
 
         public void Eat(Food food)
         {
             if (Inventory.Contains(food))
             {
-               food.ApplyEffect(this);
+                food.ApplyEffect(this);
                 Inventory.Remove(food);
-              
             }
             else
             {
                 Console.WriteLine($"{Name} does not have {food.Name} in their inventory.");
             }
         }
+
         public void Drink(Potion potion)
         {
             if (Inventory.Contains(potion))
             {
-               potion.ApplyEffect(this);
+                potion.ApplyEffect(this);
                 Inventory.Remove(potion);
-                
-
             }
             else
             {
                 Console.WriteLine($"{Name} does not have {potion.Name} in their inventory.");
             }
         }
+
         public void Equip(Equipment equipment)
         {
             if (!Inventory.Contains(equipment))
@@ -51,7 +52,9 @@ namespace ConsoleRpg.Characters
 
             if (equipment.LevelRequirement > this.Lvl)
             {
-                Console.WriteLine($"{Name} does not meet the level requirement to equip {equipment.Name}.");
+                Console.WriteLine(
+                    $"{Name} does not meet the level requirement to equip {equipment.Name}."
+                );
                 return;
             }
 
@@ -71,7 +74,6 @@ namespace ConsoleRpg.Characters
 
             if (oldEquipment != null)
             {
-
                 if (oldEquipment is Weapon oldWeapon)
                     Attack -= oldWeapon.Attack;
                 if (oldEquipment is Amulet oldAmulet)
@@ -96,12 +98,8 @@ namespace ConsoleRpg.Characters
 
             EquippedItems.Add(equipment);
             Inventory.Remove(equipment);
-
-
-
-
-
         }
+
         public void Buy(Item item)
         {
             if (Gold > item.Price)
@@ -109,16 +107,16 @@ namespace ConsoleRpg.Characters
                 Inventory.Add(item);
                 Gold -= item.Price;
                 Console.WriteLine($"{Name} bought {item.Name} for {item.Price} golds ");
-
             }
             else
             {
                 Console.WriteLine($"You do not have enough gold to buy {item.Name}.");
             }
         }
+
         public void Sell(Item item, Npc npc)
         {
-            if(Inventory.Contains(item) && npc.Gold >= item.Price )
+            if (Inventory.Contains(item) && npc.Gold >= item.Price)
             {
                 Inventory.Remove(item);
                 Gold += item.Price;
@@ -127,7 +125,5 @@ namespace ConsoleRpg.Characters
                 Console.WriteLine($"{Name} sold {item.Name} to {npc.Name} for {item.Price} golds.");
             }
         }
-        }
     }
-
-
+}

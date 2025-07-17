@@ -13,9 +13,9 @@ namespace ConsoleRpg.Inventory
         public string Description { get; set; }
         public int Price { get; set; }
 
-        public Item (string name, string description,int price)
+        public Item(string name, string description, int price)
         {
-            Id = Guid.NewGuid ();
+            Id = Guid.NewGuid();
             Name = name;
             Description = description;
             Price = price;

@@ -6,7 +6,5 @@ using System.Threading.Tasks;
 
 namespace ConsoleRpg.Combat
 {
-    internal class CombatManager
-    {
-    }
+    internal class CombatManager { }
 }

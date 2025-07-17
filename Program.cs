@@ -8,12 +8,7 @@ namespace ConsoleRpg
     {
         static void Main(string[] args)
         {
-
-            Game.StartGame(); 
-          
-
-
-
+            Game.StartGame();
         }
     }
 }

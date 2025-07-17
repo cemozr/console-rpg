@@ -10,7 +10,14 @@ namespace ConsoleRpg.Inventory
     {
         public int MaxHealth { get; private set; }
 
-        public Amulet(string name, string description, int price, int maxHealth, int levelRequirement) : base(name, description, price, levelRequirement)
+        public Amulet(
+            string name,
+            string description,
+            int price,
+            int maxHealth,
+            int levelRequirement
+        )
+            : base(name, description, price, levelRequirement)
         {
             MaxHealth = maxHealth;
         }

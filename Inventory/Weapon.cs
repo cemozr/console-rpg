@@ -6,11 +6,12 @@ using System.Threading.Tasks;
 
 namespace ConsoleRpg.Inventory
 {
-    public class Weapon: Equipment
+    public class Weapon : Equipment
     {
         public int Attack { get; private set; }
 
-        public Weapon(string name, string description, int price, int attack, int levelRequirement) : base(name, description, price, levelRequirement)
+        public Weapon(string name, string description, int price, int attack, int levelRequirement)
+            : base(name, description, price, levelRequirement)
         {
             Attack = attack;
         }

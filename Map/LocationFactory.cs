@@ -4,12 +4,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using ConsoleRpg.Characters.Enemy;
+using Spectre.Console;
 
 namespace ConsoleRpg.Map
 {
     public static class LocationFactory
     {
-        public static List<Location> GetLocations(string name)
+        public static List<Location> CreateLocations()
         {
             return new List<Location>
             {
@@ -39,6 +40,13 @@ namespace ConsoleRpg.Map
                     "A murky, humid swamp where the ground swallows the careless and the air hums with danger.",
                     "Drowned in Dread",
                     EnemyFactory.CreateSwampEnemies(),
+                    []
+                ),
+                new Location(
+                    "Newhaven",
+                    "A peaceful haven for weary travelers — where smoke rises from chimneys, not battlefields.A place to rest, craft, and recover.",
+                    "Peacefull",
+                    [],
                     []
                 ),
             };

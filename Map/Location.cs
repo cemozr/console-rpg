@@ -3,8 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using ConsoleRpg.Characters;
 using ConsoleRpg.Characters.Enemy;
+using ConsoleRpg.Characters.Npcs;
 
 namespace ConsoleRpg.Map
 {

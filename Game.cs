@@ -19,7 +19,6 @@ namespace ConsoleRpg
             get => _currentPlayer;
             private set => _currentPlayer = value;
         }
-        public static Location CurrentLocation { get; set; }
 
         public static Player CreateCharacter()
         {
@@ -28,11 +27,15 @@ namespace ConsoleRpg
             AnsiConsole.MarkupLine(
                 "[yellow italic]Ah... Another soul steps into the realm of shadows and secrets.\r\n\r\nWelcome, traveler. I have felt your presence long before your feet touched this land.\r\n\r\nThese paths you now walk are not paved with glory, but with trials, sorrow... and fate.\r\n\r\nThe world has changed — kingdoms have fallen, beasts have awakened, and hope flickers like a candle in the wind.\r\n\r\nBut you... there is something different in your eyes. A hunger. A fire.\r\n\r\nPerhaps you are the one the prophecies spoke of... or just another lost wanderer.\r\n\r\nTime will tell.\r\n\r\nNow, choose your path wisely — for every step forward echoes in eternity.[/]"
             );
-            AnsiConsole.WriteLine();
-            AnsiConsole.WriteLine();
-            AnsiConsole.Write(new Rule("[yellow][/]"));
-            AnsiConsole.WriteLine();
-            AnsiConsole.WriteLine();
+            AnsiConsole.MarkupLine("[green slowblink]Press any key to continue...[/]");
+            Console.ReadKey(true);
+            Console.Clear();
+
+            //AnsiConsole.WriteLine();
+            //AnsiConsole.WriteLine();
+            //AnsiConsole.Write(new Rule("[yellow][/]"));
+            //AnsiConsole.WriteLine();
+            //AnsiConsole.WriteLine();
 
             var name = AnsiConsole.Ask<string>(
                 "[yellow italic]Tell me, what [green]name[/] do the winds whisper for you?[/]"
@@ -57,7 +60,7 @@ namespace ConsoleRpg
             if (age == "5-12")
             {
                 AnsiConsole.MarkupLine(
-                    "[red][italic]*He chuckles, stroking his beard with exaggerated concern*[/].\r\n\r\nTell me, brave one — did your mother pack you a lunch? Perhaps a bedtime story too?[/]"
+                    "[yellow italic][blue italic]*He chuckles, stroking his beard with exaggerated concern*[/].\r\n\r\nTell me, brave one — did your mother pack you a lunch? Perhaps a bedtime story too?[/]"
                 );
                 Thread.Sleep(3000);
                 Environment.Exit(0);
@@ -65,7 +68,7 @@ namespace ConsoleRpg
             if (age == "+70")
             {
                 AnsiConsole.MarkupLine(
-                    "[red italic]*The old man chuckles softly.*\r\n\r\n\"Your bones are weary, traveler.  \r\nThis path is for the young… and the foolish.  \r\nGo home. Rest. You've earned it.\"[/]"
+                    "[yellow italic][blue italic]*The old man chuckles softly.*[/]\r\n\r\n\"Your bones are weary, traveler.  \r\nThis path is for the young… and the foolish.  \r\nGo home. Rest. You've earned it.\"[/]"
                 );
                 Thread.Sleep(3000);
                 Environment.Exit(0);
@@ -82,7 +85,7 @@ namespace ConsoleRpg
             var story = AnsiConsole.Ask<string>(
                 "[yellow italic]Tell me, what is your [green]story[/]? You can tell whatever you want.[/]"
             );
-
+            Console.Clear();
             int lvl;
             switch (age)
             {
@@ -146,8 +149,6 @@ namespace ConsoleRpg
             }
 
             Player player = new Player(name, lvl, story, 10, [item]);
-
-            //AnsiConsole.MarkupLine($"[yellow]Character Created:[/] Name: {name}, Age: {age}, Story: {story}, Job: {job}");
             return player;
         }
 
@@ -194,39 +195,106 @@ namespace ConsoleRpg
             //.Start("[green]Game is starting...[/]", ctx =>
             //{
             //    Thread.Sleep(1000);
-            //    ctx.Status("[green]Old wise man is preparing his long, boring speech...[/]");
+            //    ctx.Status("[blue italic]Old wise man is preparing his long, boring speech...[/]");
             //    Thread.Sleep(2000);
-            //    ctx.Status("[green]Practicing his sage voice[/]");
+            //    ctx.Status("[blue italic]Practicing his sage voice[/]");
             //    Thread.Sleep(2000);
-            //    ctx.Status("[green]Preparing his pipe[/]");
+            //    ctx.Status("[blue italic]Preparing his pipe[/]");
             //    Thread.Sleep(2000);
-            //    ctx.Status("[green]And now he is ready to speak...[/]");
+            //    ctx.Status("[blue italic]And now he is ready to speak...[/]");
             //    Thread.Sleep(1000);
             //});
-            Player player = CreateCharacter();
-            CurrentPlayer = player;
-            switch (player.Lvl)
+            CurrentPlayer = CreateCharacter();
+
+            switch (CurrentPlayer.Lvl)
             {
                 case 1:
                     AnsiConsole.MarkupLine(
-                        $"[yellow italic][green]{player.Name}[/]... You're young, swift... but the road ahead is long.\r\nI see traces of your past—just a spark, but it’s there.\r\nI've left you a small gift.\r\nCheck your bag.\r\nAnd remember:\r\nTrue strength is forged with patience.[/]"
+                        $"[yellow italic][green]{CurrentPlayer.Name}[/]... You're young, swift... but the road ahead is long.\r\nI see traces of your past—just a spark, but it’s there.\r\nI've left you a small gift.\r\nCheck your bag.\r\nAnd remember:\r\nTrue strength is forged with patience.[/]"
                     );
                     break;
                 case 2:
                     AnsiConsole.MarkupLine(
-                        $"[yellow italic][green]{player.Name}[/]... You're no longer a reckless youth, nor an old shadow.\r\nYou're in the heart of your journey—where choices matter most.\r\nYour past has started to shape your steps.\r\nI left something behind for you...\r\nTake a look in your bag.\r\nExperience is the compass of those who know their path.[/]"
+                        $"[yellow italic][green]{CurrentPlayer.Name}[/]... You're no longer a reckless youth, nor an old shadow.\r\nYou're in the heart of your journey—where choices matter most.\r\nYour past has started to shape your steps.\r\nI left something behind for you...\r\nTake a look in your bag.\r\nExperience is the compass of those who know their path.[/]"
                     );
                     break;
                 case 3:
                     AnsiConsole.MarkupLine(
-                        $"[yellow italic]Ah, [green]{player.Name}[/]... Yours is a name that's carried far.\r\nTime has not worn you down—it has ripened you.\r\nYour past is heavy, yet full of meaning.\r\nSo I left a sign of respect to it.\r\nThere’s something waiting in your bag.\r\nYour strength is no longer in what you see or strike… but in what you sense.\r\n\r\n [/]"
+                        $"[yellow italic]Ah, [green]{CurrentPlayer.Name}[/]... Yours is a name that's carried far.\r\nTime has not worn you down—it has ripened you.\r\nYour past is heavy, yet full of meaning.\r\nSo I left a sign of respect to it.\r\nThere’s something waiting in your bag.\r\nYour strength is no longer in what you see or strike… but in what you sense.\r\n\r\n [/]"
                     );
                     break;
             }
-
+            AnsiConsole.MarkupLine("");
+            AnsiConsole.MarkupLine("");
             AnsiConsole.MarkupLine(
-                $"[red]Current player: {CurrentPlayer.Name}\r\nInventory: {CurrentPlayer.Inventory[0].Name}[/]"
+                "[yellow italic]“So… the time has come.”\r\n“The world outside these woods is stirring. Danger brews, and your name will soon echo through it.”\r\n“Newhaven is where your path begins — not with glory, but with purpose.”\r\n“You won't find answers there, but you'll find the strength to ask the right questions.”\r\n“Hold still now. May your steps be true…”[/]"
             );
+            AnsiConsole.MarkupLine("");
+            AnsiConsole.MarkupLine("");
+            AnsiConsole.MarkupLine("[green slowblink]Press any key to continue...[/]");
+            Console.ReadKey(true);
+            Console.Clear();
+            AnsiConsole
+                .Status()
+                .Spinner(Spinner.Known.Dots)
+                .Start(
+                    "[blue italic]*The sage strikes his staff on the ground. A bright burst of light… the screen goes black.*[/]",
+                    ctx =>
+                    {
+                        Thread.Sleep(1000);
+                        ctx.Status("[green]...[/]");
+                        Thread.Sleep(1000);
+                        ctx.Status("[green]...[/]");
+                        Thread.Sleep(1000);
+                    }
+                );
+            AnsiConsole.MarkupLine(
+                "[blue italic]*You awaken on a bench near the city’s inner gate. Early morning light filters through stone arches. The sounds of merchants setting up and birds chirping mix with the distant clang of a blacksmith’s hammer.*[/]"
+            );
+            AnsiConsole.MarkupLine("[green slowblink]Press any key to continue...[/]");
+            Console.ReadKey(true);
+            Console.Clear();
+            AnsiConsole.MarkupLine(
+                "[yellow italic]Ah, you're awake. That’s good — for a moment I thought we’d have to carry you to the healer.\r\n I’m Rynn, Captain of the city guard here in Newhaven.\r\nYou arrived... well, let’s just say not in the usual way. The sage didn’t offer much, just said you'd need a place to catch your breath.\r\n\r\nThis is Newhaven. Peaceful, quiet — we keep it that way.\r\nNo monsters, no raiders, no trouble. Just honest folk, warm meals, and solid walls.\r\n\r\nTake your time. No one will rush you here. When you're ready, explore the city — meet the people. You'll find they have stories worth hearing.[/]"
+            );
+            AnsiConsole.MarkupLine("");
+            AnsiConsole.MarkupLine("");
+            AnsiConsole.MarkupLine("[green slowblink]Press any key to continue...[/]");
+            Console.ReadKey(true);
+            Console.Clear();
+        }
+
+        public static void GameManager()
+        {
+            if (CurrentPlayer.CurrentLocation.Name == "Newhaven")
+            {
+                AnsiConsole.MarkupLine(
+                    "[blue italic]*You are in Newhaven, a peaceful city where you can rest and prepare for your journey ahead.*[/]"
+                );
+                var choice = AnsiConsole.Prompt(
+                    new SelectionPrompt<string>()
+                        .Title("[blue italic]*What will you do now?*[/]")
+                        .PageSize(5)
+                        .AddChoices(
+                            new[]
+                            {
+                                "Visit Blacsmith",
+                                "Visit Alchemist",
+                                "Visit Tavern",
+                                "Visit Jeweller",
+                                "Visit Healer's Home",
+                                "Start A Journey",
+                            }
+                        )
+                );
+            }
+            else
+            {
+                AnsiConsole.MarkupLine(
+                    $"[blue italic]*You are in {CurrentPlayer.CurrentLocation.Name}, a place of mystery and adventure.*[/]"
+                );
+                Console.Clear();
+            }
         }
     }
 }

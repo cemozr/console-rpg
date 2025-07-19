@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using ConsoleRpg.Inventory;
 
-namespace ConsoleRpg.Characters
+namespace ConsoleRpg.Characters.Npcs
 {
     public class Npc : Character
     {

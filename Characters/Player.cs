@@ -3,7 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using ConsoleRpg.Characters.Npcs;
 using ConsoleRpg.Inventory;
+using ConsoleRpg.Map;
+using Spectre.Console;
 
 namespace ConsoleRpg.Characters
 {
@@ -12,6 +15,10 @@ namespace ConsoleRpg.Characters
         public List<Equipment> EquippedItems { get; set; } = new List<Equipment>();
 
         public int Exp { get; set; } = 0;
+
+        public Location CurrentLocation { get; private set; } =
+            LocationFactory.CreateLocations().FirstOrDefault(m => m.Name == "Newhaven")
+            ?? throw new InvalidOperationException("Default location 'Newhaven' not found.");
 
         public Player(string name, int lvl, string description, int gold, List<Item> inventory)
             : base(name, lvl, description, gold, inventory) { }
@@ -123,6 +130,21 @@ namespace ConsoleRpg.Characters
                 npc.Gold -= item.Price;
                 npc.Inventory.Add(item);
                 Console.WriteLine($"{Name} sold {item.Name} to {npc.Name} for {item.Price} golds.");
+            }
+        }
+
+        public void Travel(Location location)
+        {
+            if (location == CurrentLocation)
+            {
+                AnsiConsole.MarkupLine($"[red]{Name} is already in {location.Name}.[/]");
+            }
+            else
+            {
+                CurrentLocation = location;
+                AnsiConsole.MarkupLine(
+                    $"[green]{Name} has traveled to {location.Name}\r\n [yellow italic]{location.Description}.[/][/]"
+                );
             }
         }
     }

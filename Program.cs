@@ -8,7 +8,9 @@ namespace ConsoleRpg
     {
         static void Main(string[] args)
         {
+            //MusicPlayer.PlayMusic("Resources/bgm.mp3");
             Game.StartGame();
+            Game.ShowCityMenu();
         }
     }
 }

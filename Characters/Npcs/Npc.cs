@@ -25,15 +25,19 @@ namespace ConsoleRpg.Characters.Npcs
             Dialog = dialog;
         }
 
-        public void BuyMenu()
+        public void BuyMenu(Npc npc)
         {
+            var itemChoices = npc.Inventory.Select(item => item.Name).Append("Leave");
+
             while (true)
             {
                 var choice = AnsiConsole.Prompt(
                     new SelectionPrompt<string>()
                         .Title("[yellow]You break it, you buy it. Otherwise—enjoy browsing.[/]")
-                        .AddChoices(new[] { "item1", "item2", "item3", "Leave" })
+                        .PageSize(12)
+                        .AddChoices(itemChoices)
                 );
+
                 switch (choice)
                 {
                     case "item1":

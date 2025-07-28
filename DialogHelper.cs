@@ -35,40 +35,39 @@ namespace ConsoleRpg
             Console.Clear();
         }
 
-        //public static void NpcDialog(Npc? npc, string dialog)
-        //{
-        //    if (npc != null)
-        //    {
-
-        //            AnsiConsole.MarkupLine(
-        //                $"[aqua bold]{npc.Name}[/] says: [yellow italic]{dialog}[/]"
-        //            );
-
-        //        AnsiConsole.MarkupLine("");
-        //        AnsiConsole.MarkupLine("");
-        //    }
-        //    else
-        //    {
-        //        throw new ArgumentNullException(nameof(npc), "NPC cannot be null.");
-        //    }
-        //}
-
-        public static void NpcDialog(Npc? npc, string dialog, int delay = 30)
+        public static void NpcDialog(Npc? npc, string dialog)
         {
-            if (npc == null)
-                throw new ArgumentNullException(nameof(npc), "NPC cannot be null.");
-
-            AnsiConsole.Markup($"[aqua bold]{npc.Name}[/] says: ");
-            foreach (char c in dialog)
+            if (npc != null)
             {
-                string escapedChar = Markup.Escape(c.ToString());
-                AnsiConsole.Markup($"[yellow italic]{escapedChar}[/]");
-                Thread.Sleep(delay);
-            }
+                AnsiConsole.MarkupLine(
+                    $"[aqua bold]{npc.Name}[/] says: [yellow italic]{dialog}[/]"
+                );
 
-            AnsiConsole.WriteLine();
-            AnsiConsole.WriteLine();
+                AnsiConsole.MarkupLine("");
+                AnsiConsole.MarkupLine("");
+            }
+            else
+            {
+                throw new ArgumentNullException(nameof(npc), "NPC cannot be null.");
+            }
         }
+
+        //public static void NpcDialog(Npc? npc, string dialog, int delay = 30)
+        //{
+        //    if (npc == null)
+        //        throw new ArgumentNullException(nameof(npc), "NPC cannot be null.");
+
+        //    AnsiConsole.Markup($"[aqua bold]{npc.Name}[/] says: ");
+        //    foreach (char c in dialog)
+        //    {
+        //        string escapedChar = Markup.Escape(c.ToString());
+        //        AnsiConsole.Markup($"[yellow italic]{escapedChar}[/]");
+        //        Thread.Sleep(delay);
+        //    }
+
+        //    AnsiConsole.WriteLine();
+        //    AnsiConsole.WriteLine();
+        //}
 
         public static void StoryTellerDialog(string dialog)
         {

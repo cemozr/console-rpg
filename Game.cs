@@ -122,47 +122,52 @@ namespace ConsoleRpg
             switch (job)
             {
                 case "Smith":
-                    item = new Equipment(
-                        "Iron Sword",
-                        "A sturdy iron sword, perfect for a young warrior.",
-                        100,
-                        lvl
-                    );
+                    item =
+                        ItemFactory.CreateWeapons().FirstOrDefault((w) => w.Name == "Rusty Dagger")
+                        ?? throw new ArgumentException(
+                            "No suitable weapon found for the Smith class."
+                        );
                     break;
                 case "Farmer":
-                    item = new Food("Watermelon", "Juicy and refreshing.", 20, 20);
+                    item =
+                        ItemFactory.CreateFoods().FirstOrDefault((f) => f.Name == "Elven Bread")
+                        ?? throw new ArgumentException(
+                            "No suitable food item found for the Farmer class."
+                        );
                     break;
                 case "Alchemist":
-                    item = new Potion(
-                        "Healing Potion",
-                        "A potion that restores health.",
-                        30,
-                        "heal",
-                        50
-                    );
+                    item =
+                        ItemFactory
+                            .CreatePotions()
+                            .FirstOrDefault((p) => p.Name == "Greater Healing Potion")
+                        ?? throw new ArgumentException(
+                            "No suitable potion found for the Alchemist class."
+                        );
                     break;
                 case "Guard":
-                    item = new Equipment("Leather Armor", "Basic armor worn by guards.", 80, lvl);
+                    item =
+                        ItemFactory.CreateArmors().FirstOrDefault((a) => a.Name == "Padded Vest")
+                        ?? throw new ArgumentException(
+                            "No suitable armor found for the Guard class."
+                        );
                     break;
                 case "Hunter":
-                    item = new Equipment(
-                        "Hunting Bow",
-                        "A bow used for hunting, effective in combat.",
-                        120,
-                        lvl
-                    );
+                    item =
+                        ItemFactory.CreateWeapons().FirstOrDefault((w) => w.Name == "Spear")
+                        ?? throw new ArgumentException(
+                            "No suitable weapon found for the Hunter class."
+                        );
                     break;
                 default:
-                    item = new Equipment(
-                        "Iron Sword",
-                        "A sturdy iron sword, perfect for a young warrior.",
-                        100,
-                        lvl
-                    );
+                    item =
+                        ItemFactory.CreateWeapons().FirstOrDefault((w) => w.Name == "Rusty Dagger")
+                        ?? throw new ArgumentException(
+                            "No suitable weapon found for the default class."
+                        );
                     break;
             }
 
-            Player player = new Player(name, lvl, story, 10, [item]);
+            Player player = new Player(name, lvl, story, 100, [item]);
             return player;
         }
 
@@ -195,7 +200,7 @@ namespace ConsoleRpg
                             break;
                         case "Buy Something":
                             Console.Clear();
-                            npc.BuyMenu();
+                            npc.BuyMenu(npc);
                             break;
                         case "Sell Something":
                             Console.Clear();
@@ -225,10 +230,11 @@ namespace ConsoleRpg
                 var choice = AnsiConsole.Prompt(
                     new SelectionPrompt<string>()
                         .Title("[blue italic]*What will you do now?*[/]")
-                        .PageSize(6)
+                        .PageSize(7)
                         .AddChoices(
                             new[]
                             {
+                                "Check Your Bag",
                                 "Visit Blacksmith",
                                 "Visit Alchemist",
                                 "Visit Tavern",
@@ -241,6 +247,14 @@ namespace ConsoleRpg
                 Console.Clear();
                 switch (choice)
                 {
+                    case "Check Your Bag":
+                        DialogHelper.StoryTellerDialog(
+                            "You open your bag and see the items you have collected so far."
+                        );
+                        Player.ShowPlayerEquipmentAndInventory(CurrentPlayer);
+                        DialogHelper.ContinueWithNextLine();
+                        break;
+
                     case "Visit Blacksmith":
 
                         ShowNpcMenu(Npcs.FirstOrDefault((n) => n.Name == "Thoren Ironhand"));
@@ -260,6 +274,15 @@ namespace ConsoleRpg
                     case "Visit Healer's Home":
 
                         ShowNpcMenu(Npcs.FirstOrDefault((n) => n.Name == "Brother Eamon"));
+                        break;
+
+                    case "Start A Journey":
+                        DialogHelper.StoryTellerDialog(
+                            "You step out of the city gates, ready to face the unknown challenges that await you in the forsaken lands."
+                        );
+                        break;
+                    default:
+                        AnsiConsole.MarkupLine("[red]Invalid choice, try again.[/]");
                         break;
                 }
             }
@@ -325,7 +348,7 @@ namespace ConsoleRpg
             //    Thread.Sleep(1000);
             //});
             CurrentPlayer = CreateCharacter();
-
+            Player.ShowPlayerEquipmentAndInventory(CurrentPlayer);
             switch (CurrentPlayer.Lvl)
             {
                 case 1:

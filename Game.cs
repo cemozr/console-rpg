@@ -200,11 +200,11 @@ namespace ConsoleRpg
                             break;
                         case "Buy Something":
                             Console.Clear();
-                            npc.BuyMenu(npc);
+                            ShopManager.BuyMenu(npc, CurrentPlayer);
                             break;
                         case "Sell Something":
                             Console.Clear();
-                            npc.SellMenu();
+                            ShopManager.SellMenu(npc, CurrentPlayer);
                             break;
                         case "Return To Town Center":
                             Console.Clear();
@@ -251,7 +251,7 @@ namespace ConsoleRpg
                         DialogHelper.StoryTellerDialog(
                             "You open your bag and see the items you have collected so far."
                         );
-                        Player.ShowPlayerEquipmentAndInventory(CurrentPlayer);
+                        CurrentPlayer.ShowPlayerEquipmentAndInventory();
                         DialogHelper.ContinueWithNextLine();
                         break;
 
@@ -297,6 +297,24 @@ namespace ConsoleRpg
 
         public static void StartGame()
         {
+            // Test code
+            //Player x = new Player(
+            //    "Test",
+            //    1,
+            //    "Test Story",
+            //    100,
+            //    [
+            //        ItemFactory.CreateWeapons().FirstOrDefault((w) => w.Name == "Rusty Dagger")
+            //            ?? throw new ArgumentException(
+            //                "No suitable weapon found for the test player."
+            //            ),
+            //    ]
+            //);
+            //CurrentPlayer = x;
+            //Npc innkeeper = NpcFactory.CreateInnkeeper();
+            //ShowNpcMenu(innkeeper);
+            //CurrentPlayer.ShowPlayerEquipmentAndInventory();
+
             Console.Clear();
 
             AnsiConsole.WriteLine();
@@ -333,22 +351,28 @@ namespace ConsoleRpg
                     );
             }
 
-            //  AnsiConsole.Status()
-            //.Spinner(Spinner.Known.Dots)
-            //.Start("[green]Game is starting...[/]", ctx =>
-            //{
-            //    Thread.Sleep(1000);
-            //    ctx.Status("[blue italic]Old wise man is preparing his long, boring speech...[/]");
-            //    Thread.Sleep(2000);
-            //    ctx.Status("[blue italic]Practicing his sage voice[/]");
-            //    Thread.Sleep(2000);
-            //    ctx.Status("[blue italic]Preparing his pipe[/]");
-            //    Thread.Sleep(2000);
-            //    ctx.Status("[blue italic]And now he is ready to speak...[/]");
-            //    Thread.Sleep(1000);
-            //});
+            AnsiConsole
+                .Status()
+                .Spinner(Spinner.Known.Dots)
+                .Start(
+                    "[green]Game is starting...[/]",
+                    ctx =>
+                    {
+                        Thread.Sleep(1000);
+                        ctx.Status(
+                            "[blue italic]Old wise man is preparing his long, boring speech...[/]"
+                        );
+                        Thread.Sleep(2000);
+                        ctx.Status("[blue italic]Practicing his sage voice[/]");
+                        Thread.Sleep(2000);
+                        ctx.Status("[blue italic]Preparing his pipe[/]");
+                        Thread.Sleep(2000);
+                        ctx.Status("[blue italic]And now he is ready to speak...[/]");
+                        Thread.Sleep(1000);
+                    }
+                );
             CurrentPlayer = CreateCharacter();
-            Player.ShowPlayerEquipmentAndInventory(CurrentPlayer);
+
             switch (CurrentPlayer.Lvl)
             {
                 case 1:

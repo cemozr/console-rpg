@@ -8,9 +8,9 @@ namespace ConsoleRpg
     {
         static void Main(string[] args)
         {
-            //MusicPlayer.PlayMusic("Resources/bgm.mp3");
+            MusicPlayer.PlayMusic("Resources/bgm.mp3");
             Game.StartGame();
-            //Game.ShowCityMenu();
+            Game.ShowCityMenu();
             //Game.ShowNpcMenu(Game.Npcs.FirstOrDefault((n) => n.Name == "Thoren Ironhand"));
         }
     }

@@ -117,12 +117,13 @@ namespace ConsoleRpg.Characters
             Inventory.Remove(equipment);
         }
 
-        public void Buy(Item item)
+        public void Buy(Item item, Npc npc)
         {
             if (Gold > item.Price)
             {
                 Inventory.Add(item);
                 Gold -= item.Price;
+                npc.Gold += item.Price;
                 Console.WriteLine($"{Name} bought {item.Name} for {item.Price} golds ");
             }
             else
@@ -143,7 +144,7 @@ namespace ConsoleRpg.Characters
             }
         }
 
-        public static void ShowPlayerEquipmentAndInventory(Player player)
+        public void ShowPlayerEquipmentAndInventory()
         {
             // Ekipman tablosu
             var equippedTable = new Table().RoundedBorder();
@@ -155,9 +156,9 @@ namespace ConsoleRpg.Characters
             equippedTable.AddColumn("Lvl");
             equippedTable.AddColumn("Price");
 
-            var weapon = player.EquippedItems.OfType<Weapon>().FirstOrDefault();
-            var armor = player.EquippedItems.OfType<Armor>().FirstOrDefault();
-            var amulet = player.EquippedItems.OfType<Amulet>().FirstOrDefault();
+            var weapon = EquippedItems.OfType<Weapon>().FirstOrDefault();
+            var armor = EquippedItems.OfType<Armor>().FirstOrDefault();
+            var amulet = EquippedItems.OfType<Amulet>().FirstOrDefault();
 
             equippedTable.AddRow(
                 "Weapon",
@@ -208,7 +209,7 @@ namespace ConsoleRpg.Characters
             inventoryTable.AddColumn("Lvl");
             inventoryTable.AddColumn("Price");
 
-            foreach (var item in player.Inventory)
+            foreach (var item in Inventory)
             {
                 string type = item switch
                 {
@@ -251,7 +252,11 @@ namespace ConsoleRpg.Characters
             }
 
             AnsiConsole.Write(inventoryTable);
-
+            AnsiConsole.MarkupLine("");
+            AnsiConsole.MarkupLine(
+                $"[yellow]Gold: {Gold} | Level: {Lvl} | Health: [red]{Health}/{MaxHealth}[/] | Attack: {Attack} | Armor: {Armor}[/]"
+            );
+            AnsiConsole.MarkupLine("");
             while (true)
             {
                 var choice = AnsiConsole.Prompt(
@@ -263,29 +268,29 @@ namespace ConsoleRpg.Characters
                 switch (choice)
                 {
                     case "Equip an Item":
-                        ShowEquipMenu(player);
+                        ShowEquipMenu();
                         break;
                     case "Eat Food":
-                        ShowEatMenu(player);
+                        ShowEatMenu();
                         break;
                     case "Drink Potion":
-                        ShowDrinkMenu(player);
+                        ShowDrinkMenu();
                         break;
                     case "Exit":
                         return;
                 }
 
                 AnsiConsole.Clear();
-                ShowPlayerEquipmentAndInventory(player);
+                ShowPlayerEquipmentAndInventory();
                 return;
             }
         }
 
-        private static void ShowEquipMenu(Player player)
+        private void ShowEquipMenu()
         {
-            var equippableItems = player
-                .Inventory.OfType<Equipment>()
-                .Where(eq => eq.LevelRequirement <= player.Lvl && eq.Durability > 0)
+            var equippableItems = Inventory
+                .OfType<Equipment>()
+                .Where(eq => eq.LevelRequirement <= Lvl && eq.Durability > 0)
                 .ToList();
             equippableItems.Add(null);
 
@@ -310,12 +315,12 @@ namespace ConsoleRpg.Characters
                 return;
             }
             else
-                player.Equip(selected);
+                Equip(selected);
         }
 
-        private static void ShowEatMenu(Player player)
+        private void ShowEatMenu()
         {
-            var foodItems = player.Inventory.OfType<Food>().ToList();
+            var foodItems = Inventory.OfType<Food>().ToList();
             foodItems.Add(null);
             if (!foodItems.Any())
             {
@@ -338,12 +343,12 @@ namespace ConsoleRpg.Characters
                 return;
             }
             else
-                player.Eat(selected);
+                Eat(selected);
         }
 
-        private static void ShowDrinkMenu(Player player)
+        private void ShowDrinkMenu()
         {
-            var potionItems = player.Inventory.OfType<Potion>().ToList();
+            var potionItems = Inventory.OfType<Potion>().ToList();
             potionItems.Add(null);
             if (!potionItems.Any())
             {
@@ -365,7 +370,7 @@ namespace ConsoleRpg.Characters
                 return;
             }
             else
-                player.Drink(selected);
+                Drink(selected);
         }
 
         public void Travel(Location location)

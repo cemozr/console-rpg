@@ -17,7 +17,8 @@ namespace ConsoleRpg.Characters.Npcs
                 "Name’s Thoren. Used to swing swords, now I shape them. Spent half my life on battlefields, lost too many friends to blunt steel and poor forging. One day, I dropped my axe and picked up the hammer for good. Now, I build so others can survive… maybe even live.",
                 1000,
                 ItemFactory.CreateWeapons().ToList<Item>(),
-                "Ah, another traveler with a blade that's seen better days. Come, let’s give it a new bite."
+                "Ah, another traveler with a blade that's seen better days. Come, let’s give it a new bite.",
+                "Blacksmith"
             );
         }
 
@@ -29,7 +30,8 @@ namespace ConsoleRpg.Characters.Npcs
                 "Name’s Duran Ironhide. Used to fight wars, now I forge armor.\r\nI’ve seen too many fall because of weak steel. That’s why I craft each piece like my life depends on it—because once, it did.\r\n If you're heading into trouble, wear something that’ll bring you back.",
                 1000,
                 ItemFactory.CreateArmors().ToList<Item>(),
-                "Need protection? My armors have seen more battles than most warriors. Take a look."
+                "Need protection? My armors have seen more battles than most warriors. Take a look.",
+                "Armorer"
             );
         }
 
@@ -41,7 +43,8 @@ namespace ConsoleRpg.Characters.Npcs
                 "They call me Elira. Once, I studied alchemy in a tower so tall the clouds kissed its windows. But knowledge without purpose… it burns. I lost much chasing power. Now, I mix to mend, not to control. My brews may fizz and spark, but they heal more than they harm. Usually.",
                 1000,
                 ItemFactory.CreatePotions().ToList<Item>(),
-                "Careful where you step… one wrong move, and your boots might walk on their own. How can I help?"
+                "Careful where you step… one wrong move, and your boots might walk on their own. How can I help?",
+                "Alchemist"
             );
         }
 
@@ -53,13 +56,14 @@ namespace ConsoleRpg.Characters.Npcs
                 "Marda’s the name. Spent years cooking for kings, but their gold never warmed my heart. Lost my dear Tom to the frost, and decided I’d had enough of cold halls and colder people. Opened this little place to feed souls, not just bellies. Around here, everyone gets a second helping — and a second chance.",
                 1000,
                 ItemFactory.CreateFoods().ToList<Item>(),
-                "You look half-starved and twice as tired. Sit down, love — a good stew solves most problems."
+                "You look half-starved and twice as tired. Sit down, love — a good stew solves most problems.",
+                "Innkeeper"
             );
         }
 
         public static Npc CreateOldSage()
         {
-            return new Npc("Old Sage", 10, "", 1000, [], "");
+            return new Npc("Old Sage", 10, "", 1000, [], "", "");
         }
 
         public static Npc CreateCaptain()
@@ -70,7 +74,8 @@ namespace ConsoleRpg.Characters.Npcs
                 "I’m Rynn, Captain of the city guard here in Newhaven",
                 1000,
                 [],
-                "You're safe here, traveler. Newhaven doesn’t tolerate trouble—not from beasts, nor blades, nor beggars with silver tongues. Keep your hands clean, your weapons sheathed, and your eyes open. This city breathes peace, but peace is something we guard with steel."
+                "You're safe here, traveler. Newhaven doesn’t tolerate trouble—not from beasts, nor blades, nor beggars with silver tongues. Keep your hands clean, your weapons sheathed, and your eyes open. This city breathes peace, but peace is something we guard with steel.",
+                "Guard"
             );
         }
 
@@ -82,11 +87,12 @@ namespace ConsoleRpg.Characters.Npcs
                 "I am Brother Eamon. I’ve seen too many fall — some from blades, others from burdens. I walked away from war with a satchel of herbs and a vow: to heal, not to judge. This clinic is open to all. No questions, no debts. Just rest, tea… and if needed, a quiet place to breathe again.",
                 1000,
                 new List<Item> { new Item("Treatment", "You will feel better", 50) },
-                "Wounds of the body are easy, but if your spirit aches… we have tea and silence too."
+                "Wounds of the body are easy, but if your spirit aches… we have tea and silence too.",
+                "Healer"
             );
         }
 
-        public static Npc CreateGemwright()
+        public static Npc CreateJeweler()
         {
             return new Npc(
                 "Brelgor Gemwright",
@@ -94,7 +100,8 @@ namespace ConsoleRpg.Characters.Npcs
                 "Born to miners, raised by enchanters—what else could I be but a gemwright? I learned to grind gems before I could read. But when I discovered that properly infused crystals could alter one’s very nature, I left the mines. Since then, I’ve helped warriors crush mountains and mages bend storms. Every stat has a stone, if you know how to cut it.",
                 1000,
                 ItemFactory.CreateAmulets().ToList<Item>(),
-                "Looking to hit harder? Move faster? Think quicker? Then you've come to the right anvil. I don’t sell jewelry—I sell power."
+                "Looking to hit harder? Move faster? Think quicker? Then you've come to the right anvil. I don’t sell jewelry—I sell power.",
+                "Jeweler"
             );
         }
 
@@ -106,7 +113,7 @@ namespace ConsoleRpg.Characters.Npcs
                 CreateAlchemist(),
                 CreateInnkeeper(),
                 CreateHealer(),
-                CreateGemwright(),
+                CreateJeweler(),
                 CreateCaptain(),
                 CreateOldSage(),
             };

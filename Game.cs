@@ -222,76 +222,79 @@ namespace ConsoleRpg
 
         public static void ShowCityMenu()
         {
-            if (CurrentPlayer.CurrentLocation.Name == "Newhaven")
+            while (true)
             {
-                DialogHelper.StoryTellerDialog(
-                    "You are in Newhaven, a peaceful city where you can rest and prepare for your journey ahead."
-                );
-                var choice = AnsiConsole.Prompt(
-                    new SelectionPrompt<string>()
-                        .Title("[blue italic]*What will you do now?*[/]")
-                        .PageSize(7)
-                        .AddChoices(
-                            new[]
-                            {
-                                "Check Your Bag",
-                                "Visit Blacksmith",
-                                "Visit Alchemist",
-                                "Visit Tavern",
-                                "Visit Jeweller",
-                                "Visit Healer's Home",
-                                "Start A Journey",
-                            }
-                        )
-                );
-                Console.Clear();
-                switch (choice)
+                if (CurrentPlayer.CurrentLocation.Name == "Newhaven")
                 {
-                    case "Check Your Bag":
-                        DialogHelper.StoryTellerDialog(
-                            "You open your bag and see the items you have collected so far."
-                        );
-                        CurrentPlayer.ShowPlayerEquipmentAndInventory();
-                        DialogHelper.ContinueWithNextLine();
-                        break;
+                    DialogHelper.StoryTellerDialog(
+                        "You are in Newhaven, a peaceful city where you can rest and prepare for your journey ahead."
+                    );
+                    var choice = AnsiConsole.Prompt(
+                        new SelectionPrompt<string>()
+                            .Title("[blue italic]*What will you do now?*[/]")
+                            .PageSize(7)
+                            .AddChoices(
+                                new[]
+                                {
+                                    "Check Your Bag",
+                                    "Visit Blacksmith",
+                                    "Visit Alchemist",
+                                    "Visit Tavern",
+                                    "Visit Jeweller",
+                                    "Visit Healer's Home",
+                                    "Start A Journey",
+                                }
+                            )
+                    );
+                    Console.Clear();
+                    switch (choice)
+                    {
+                        case "Check Your Bag":
+                            DialogHelper.StoryTellerDialog(
+                                "You open your bag and see the items you have collected so far."
+                            );
+                            CurrentPlayer.ShowPlayerEquipmentAndInventory();
+                            DialogHelper.ContinueWithNextLine();
+                            break;
 
-                    case "Visit Blacksmith":
+                        case "Visit Blacksmith":
 
-                        ShowNpcMenu(Npcs.FirstOrDefault((n) => n.Name == "Thoren Ironhand"));
-                        break;
-                    case "Visit Alchemist":
+                            ShowNpcMenu(Npcs.FirstOrDefault((n) => n.Name == "Thoren Ironhand"));
+                            break;
+                        case "Visit Alchemist":
 
-                        ShowNpcMenu(Npcs.FirstOrDefault((n) => n.Name == "Elira Vinthel"));
-                        break;
-                    case "Visit Tavern":
+                            ShowNpcMenu(Npcs.FirstOrDefault((n) => n.Name == "Elira Vinthel"));
+                            break;
+                        case "Visit Tavern":
 
-                        ShowNpcMenu(Npcs.FirstOrDefault((n) => n.Name == "Marda Hearthpan"));
-                        break;
-                    case "Visit Jeweller":
+                            ShowNpcMenu(Npcs.FirstOrDefault((n) => n.Name == "Marda Hearthpan"));
+                            break;
+                        case "Visit Jeweller":
 
-                        ShowNpcMenu(Npcs.FirstOrDefault((n) => n.Name == "Brelgor Gemwright"));
-                        break;
-                    case "Visit Healer's Home":
+                            ShowNpcMenu(Npcs.FirstOrDefault((n) => n.Name == "Brelgor Gemwright"));
+                            break;
+                        case "Visit Healer's Home":
 
-                        ShowNpcMenu(Npcs.FirstOrDefault((n) => n.Name == "Brother Eamon"));
-                        break;
+                            ShowNpcMenu(Npcs.FirstOrDefault((n) => n.Name == "Brother Eamon"));
+                            break;
 
-                    case "Start A Journey":
-                        DialogHelper.StoryTellerDialog(
-                            "You step out of the city gates, ready to face the unknown challenges that await you in the forsaken lands."
-                        );
-                        break;
-                    default:
-                        AnsiConsole.MarkupLine("[red]Invalid choice, try again.[/]");
-                        break;
+                        case "Start A Journey":
+                            DialogHelper.StoryTellerDialog(
+                                "You step out of the city gates, ready to face the unknown challenges that await you in the forsaken lands."
+                            );
+                            break;
+                        default:
+                            AnsiConsole.MarkupLine("[red]Invalid choice, try again.[/]");
+                            break;
+                    }
                 }
-            }
-            else
-            {
-                DialogHelper.StoryTellerDialog(
-                    $"You are in [green bold slowblink]{CurrentPlayer.CurrentLocation.Name}[/], a place of mystery and adventure."
-                );
-                DialogHelper.ContinueWithNextLine();
+                else
+                {
+                    DialogHelper.StoryTellerDialog(
+                        $"You are in [green bold slowblink]{CurrentPlayer.CurrentLocation.Name}[/], a place of mystery and adventure."
+                    );
+                    DialogHelper.ContinueWithNextLine();
+                }
             }
         }
 

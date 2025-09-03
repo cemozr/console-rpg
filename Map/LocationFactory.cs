@@ -16,7 +16,7 @@ namespace ConsoleRpg.Map
             {
                 new Location(
                     "Elderglen Forest",
-                    "A mystical woodland where ancient trees whisper secrets and strange lights dance at night.\r\n\r\n",
+                    "A mystical woodland where ancient trees whisper secrets and strange lights dance at night.",
                     "Gentle Trials",
                     EnemyFactory.CreateForestEnemies(),
                     []

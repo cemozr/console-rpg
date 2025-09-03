@@ -8,6 +8,7 @@ using ConsoleRpg;
 using ConsoleRpg.Characters;
 using ConsoleRpg.Characters.Enemy;
 using ConsoleRpg.Characters.Npcs;
+using ConsoleRpg.Combat;
 using ConsoleRpg.Inventory;
 using ConsoleRpg.Map;
 using Spectre.Console;
@@ -27,6 +28,10 @@ namespace ConsoleRpg
         private static readonly Npc oldSage =
             Npcs.FirstOrDefault((n) => n.Name == "Old Sage")
             ?? throw new ArgumentNullException("Old Sage NPC not found.");
+
+        // Fix for the invalid declaration of the static field `Locations`
+        // Correctly declare the field with its type and initialize it using the `LocationFactory.CreateLocations()` method.
+        public static List<Location> Locations = LocationFactory.CreateLocations();
 
         public static Player CreateCharacter()
         {
@@ -279,9 +284,7 @@ namespace ConsoleRpg
                             break;
 
                         case "Start A Journey":
-                            DialogHelper.StoryTellerDialog(
-                                "You step out of the city gates, ready to face the unknown challenges that await you in the forsaken lands."
-                            );
+                            ShowTravelMenu();
                             break;
                         default:
                             AnsiConsole.MarkupLine("[red]Invalid choice, try again.[/]");
@@ -298,9 +301,122 @@ namespace ConsoleRpg
             }
         }
 
+        public static void ShowTravelMenu()
+        {
+            DialogHelper.StoryTellerDialog(
+                "You step out of the city gates, ready to face the unknown challenges that await you in the forsaken lands."
+            );
+            AnsiConsole.MarkupLine("");
+            AnsiConsole.MarkupLine("");
+            while (true)
+            {
+                var choice = AnsiConsole.Prompt(
+                    new SelectionPrompt<string>()
+                        .Title("[blue italic]Where do you want to go?[/]")
+                        .PageSize(7)
+                        .AddChoices(
+                            new[]
+                            {
+                                "Return To Town Center",
+                                "Elderglen Forest",
+                                "Frostveil Peaks",
+                                "Ashen Wastes",
+                                "Miredeep Swamp",
+                            }
+                        )
+                );
+                Console.Clear();
+                switch (choice)
+                {
+                    case "Return To Town Center":
+                        CurrentPlayer.Travel(
+                            Locations.FirstOrDefault((loc) => loc.Name == "Newhaven")
+                                ?? throw new ArgumentNullException("location is null")
+                        );
+
+                        ShowCityMenu();
+                        return;
+                    case "Elderglen Forest":
+                        CurrentPlayer.Travel(
+                            Locations.FirstOrDefault((loc) => loc.Name == "Elderglen Forest")
+                                ?? throw new ArgumentException("Location not found.")
+                        );
+
+                        AdventureMenu();
+                        return;
+                    case "Frostveil Peaks":
+                        CurrentPlayer.Travel(
+                            Locations.FirstOrDefault((loc) => loc.Name == "Frostveil Peaks")
+                                ?? throw new ArgumentNullException("location is null")
+                        );
+
+                        AdventureMenu();
+                        return;
+                    case "Ashen Wastes":
+                        CurrentPlayer.Travel(
+                            Locations.FirstOrDefault((loc) => loc.Name == "Ashen Wastes")
+                                ?? throw new ArgumentNullException("location is null")
+                        );
+
+                        AdventureMenu();
+                        return;
+                    case "Miredeep Swamp":
+                        CurrentPlayer.Travel(
+                            Locations.FirstOrDefault((loc) => loc.Name == "Miredeep Swamp")
+                                ?? throw new ArgumentNullException("location is null")
+                        );
+
+                        AdventureMenu();
+                        return;
+                    default:
+                        return;
+                }
+            }
+        }
+
+        public static void AdventureMenu()
+        {
+            DialogHelper.StoryTellerDialog(
+                "You found a quiet spot and set down your gear.  \r\nThe tent is up, and a small fire crackles.  \r\nThe flames light the night as calm surrounds you. "
+            );
+            AnsiConsole.MarkupLine("");
+            while (true)
+            {
+                var choice = AnsiConsole.Prompt(
+                    new SelectionPrompt<string>()
+                        .Title("[yellow italic]*What will you do now?*[/]")
+                        .PageSize(5)
+                        .AddChoices(new[] { "Open Bag", "Explore the area", "Return To Town" })
+                );
+                Console.Clear();
+                switch (choice)
+                {
+                    case "Open Bag":
+                        CurrentPlayer.ShowPlayerEquipmentAndInventory();
+                        DialogHelper.ContinueWithNextLine();
+                        break;
+                    case "Explore the area":
+                        var enemies = CurrentPlayer.CurrentLocation.Enemies;
+                        CombatManager.ShowCombatMenu(CurrentPlayer, enemies);
+                        DialogHelper.ContinueWithNextLine();
+                        break;
+                    case "Return To Town Center":
+                        CurrentPlayer.Travel(
+                            Locations.FirstOrDefault((loc) => loc.Name == "NewHaven")
+                                ?? throw new ArgumentNullException("location is null")
+                        );
+                        ShowCityMenu();
+                        return;
+                    default:
+                        AnsiConsole.MarkupLine("[red]Invalid choice, try again.[/]");
+                        break;
+                }
+            }
+        }
+
         public static void StartGame()
         {
-            // Test code
+            //Test code
             //Player x = new Player(
             //    "Test",
             //    1,
@@ -317,8 +433,8 @@ namespace ConsoleRpg
             //Npc innkeeper = NpcFactory.CreateInnkeeper();
             //ShowNpcMenu(innkeeper);
             //CurrentPlayer.ShowPlayerEquipmentAndInventory();
-
-            Console.Clear();
+            //ShowTravelMenu();
+            //Console.Clear();
 
             AnsiConsole.WriteLine();
             AnsiConsole.WriteLine();

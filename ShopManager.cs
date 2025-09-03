@@ -96,6 +96,7 @@ namespace ConsoleRpg
                 );
                 if (choice == "Leave")
                 {
+                    Console.Clear();
                     return;
                 }
                 player.Buy(
@@ -120,6 +121,7 @@ namespace ConsoleRpg
                 );
                 if (choice == "Leave")
                 {
+                    Console.Clear();
                     return;
                 }
                 player.Sell(

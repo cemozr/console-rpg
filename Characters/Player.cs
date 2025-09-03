@@ -3,7 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Numerics;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
+using ConsoleRpg.Characters.Enemy;
 using ConsoleRpg.Characters.Npcs;
 using ConsoleRpg.Inventory;
 using ConsoleRpg.Map;
@@ -382,10 +384,40 @@ namespace ConsoleRpg.Characters
             else
             {
                 CurrentLocation = location;
-                AnsiConsole.MarkupLine(
-                    $"[green]{Name} has traveled to {location.Name}\r\n [yellow italic]{location.Description}.[/][/]"
-                );
+                DialogHelper.StoryTellerDialog($"You are in {location.Name} brave adventurer!");
+                AnsiConsole.MarkupLine("");
+                AnsiConsole.MarkupLine($"[yellow italic]{location.Description}.[/]");
+                DialogHelper.ContinueWithNextLine();
             }
+        }
+
+        public void Death()
+        {
+            AnsiConsole
+                .Status()
+                .Spinner(Spinner.Known.Star)
+                .Start(
+                    "[blue bold]You are trying to breath...[/]",
+                    ctx =>
+                    {
+                        AnsiConsole.MarkupLine("");
+                        Thread.Sleep(2000);
+                        AnsiConsole.MarkupLine(
+                            $"[darkred_1 bold]Your knees buckle as the final blow lands...[/]"
+                        );
+                        AnsiConsole.MarkupLine("");
+                        Thread.Sleep(2000);
+                        AnsiConsole.MarkupLine(
+                            " [darkred]The weapon slips from your grasp, clattering to the ground.[/]"
+                        );
+                        AnsiConsole.MarkupLine("");
+                        AnsiConsole.MarkupLine(
+                            " [grey italic]Cold darkness creeps in, and the world around you fades away.[/]"
+                        );
+                        Thread.Sleep(2000);
+                        Environment.Exit(0);
+                    }
+                );
         }
     }
 }

@@ -18,5 +18,11 @@ namespace ConsoleRpg.Characters.Enemy
         {
             Exp = Lvl * 100;
         }
+
+        public void Death(List<Enemy> enemies, Enemy enemy)
+        {
+            enemies.Remove(enemy);
+            DialogHelper.EnemyDeathDialog(enemy.Name);
+        }
     }
 }

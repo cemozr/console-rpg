@@ -30,7 +30,7 @@ namespace ConsoleRpg.Characters
             MaxHealth = Lvl * 100;
             Health = MaxHealth;
             Attack = Lvl * 10;
-            Armor = Lvl * 10;
+            Armor = Lvl * 4;
             Gold = gold;
             Inventory = inventory;
         }

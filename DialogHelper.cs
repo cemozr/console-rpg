@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using ConsoleRpg.Characters.Enemy;
 using ConsoleRpg.Characters.Npcs;
 using Spectre.Console;
 
@@ -71,7 +72,15 @@ namespace ConsoleRpg
 
         public static void StoryTellerDialog(string dialog)
         {
-            AnsiConsole.MarkupLine($"[blue bold]*{dialog}*[/]");
+            AnsiConsole.MarkupLine($"[blue bold]{dialog}[/]");
+        }
+
+        public static void EnemyDeathDialog(string enemyName)
+        {
+            AnsiConsole.MarkupLine("");
+            AnsiConsole.MarkupLine(
+                $"[blue bold][red bold slowblink]{enemyName}[/] lets out a final cry and falls to the ground...[/]  \r\n[grey italic]The battlefield grows silent for a moment.[/]  "
+            );
         }
     }
 }

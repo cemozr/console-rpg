@@ -123,14 +123,22 @@ namespace ConsoleRpg.Characters
         {
             if (Gold > item.Price)
             {
+                Console.Clear();
+                AnsiConsole.MarkupLine("");
                 Inventory.Add(item);
                 Gold -= item.Price;
                 npc.Gold += item.Price;
-                Console.WriteLine($"{Name} bought {item.Name} for {item.Price} golds ");
+                AnsiConsole.MarkupLine(
+                    $"[green]{Name} bought [yellow slowblink]{item.Name}[/] from {npc.Name} for [yellow slowblink]{item.Price}[/] golds.[/]"
+                );
             }
             else
             {
-                Console.WriteLine($"You do not have enough gold to buy {item.Name}.");
+                Console.Clear();
+                AnsiConsole.MarkupLine("");
+                AnsiConsole.MarkupLine(
+                    $"[red]You do not have enough gold to buy [yellow slowblink]{item.Name}[/][/]"
+                );
             }
         }
 
@@ -138,11 +146,15 @@ namespace ConsoleRpg.Characters
         {
             if (Inventory.Contains(item) && npc.Gold >= item.Price)
             {
+                Console.Clear();
+                AnsiConsole.MarkupLine("");
                 Inventory.Remove(item);
                 Gold += item.Price;
                 npc.Gold -= item.Price;
                 npc.Inventory.Add(item);
-                Console.WriteLine($"{Name} sold {item.Name} to {npc.Name} for {item.Price} golds.");
+                AnsiConsole.MarkupLine(
+                    $"[green]{Name} sold [underline]{item.Name}[/] to {npc.Name} for {item.Price} golds.[/]"
+                );
             }
         }
 

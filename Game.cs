@@ -417,21 +417,21 @@ namespace ConsoleRpg
         public static void StartGame()
         {
             //Test code
-            //Player x = new Player(
-            //    "Test",
-            //    1,
-            //    "Test Story",
-            //    100,
-            //    [
-            //        ItemFactory.CreateWeapons().FirstOrDefault((w) => w.Name == "Rusty Dagger")
-            //            ?? throw new ArgumentException(
-            //                "No suitable weapon found for the test player."
-            //            ),
-            //    ]
-            //);
-            //CurrentPlayer = x;
-            //Npc innkeeper = NpcFactory.CreateInnkeeper();
-            //ShowNpcMenu(innkeeper);
+            Player x = new Player(
+                "Test",
+                1,
+                "Test Story",
+                100,
+                [
+                    ItemFactory.CreateWeapons().FirstOrDefault((w) => w.Name == "Rusty Dagger")
+                        ?? throw new ArgumentException(
+                            "No suitable weapon found for the test player."
+                        ),
+                ]
+            );
+            CurrentPlayer = x;
+            Npc innkeeper = NpcFactory.CreateInnkeeper();
+            ShowNpcMenu(innkeeper);
             //CurrentPlayer.ShowPlayerEquipmentAndInventory();
             //ShowTravelMenu();
             //Console.Clear();

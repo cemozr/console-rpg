@@ -12,7 +12,7 @@ namespace ConsoleRpg
 {
     public static class ShopManager
     {
-        public static void CreateShopTable(Character character, string shopTitle)
+        public static void CreateShopTable(Npc character, string shopTitle, Player player)
         {
             var inventoryTable = new Table().RoundedBorder();
             inventoryTable.Title($"[blue bold blink]{shopTitle}[/]");
@@ -78,16 +78,17 @@ namespace ConsoleRpg
             }
 
             AnsiConsole.Write(inventoryTable);
+            AnsiConsole.MarkupLine("");
+            AnsiConsole.MarkupLine($"[yellow]You have {player.Gold} g[/]\n");
         }
 
         public static void BuyMenu(Npc npc, Player player)
         {
-            CreateShopTable(npc, "Items For Sale");
-
-            var itemChoices = npc.Inventory.Select(item => item.Name).Append("Leave");
-
             while (true)
             {
+                CreateShopTable(npc, "Items For Sale", player);
+
+                var itemChoices = npc.Inventory.Select(item => item.Name).Append("Leave");
                 var choice = AnsiConsole.Prompt(
                     new SelectionPrompt<string>()
                         .Title("[yellow]You break it, you buy it. Otherwise—enjoy browsing.[/]")
@@ -111,7 +112,7 @@ namespace ConsoleRpg
         {
             while (true)
             {
-                CreateShopTable(player, "Inventory");
+                CreateShopTable(npc, "Inventory", player);
                 var items = player.Inventory.Select(item => item.Name).Append("Leave");
                 var choice = AnsiConsole.Prompt(
                     new SelectionPrompt<string>()

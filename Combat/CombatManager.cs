@@ -124,6 +124,7 @@ namespace ConsoleRpg.Combat
                 switch (choice)
                 {
                     case "Open Bag":
+
                         player.ShowPlayerEquipmentAndInventory();
                         break;
                     case "Attack":

@@ -128,9 +128,6 @@ namespace ConsoleRpg.Characters
                 Inventory.Add(item);
                 Gold -= item.Price;
                 npc.Gold += item.Price;
-                AnsiConsole.MarkupLine(
-                    $"[green]{Name} bought [yellow slowblink]{item.Name}[/] from {npc.Name} for [yellow slowblink]{item.Price}[/] golds.[/]"
-                );
             }
             else
             {
@@ -163,12 +160,12 @@ namespace ConsoleRpg.Characters
             // Ekipman tablosu
             var equippedTable = new Table().RoundedBorder();
             equippedTable.Title("[green]Equipped Items[/]");
-            equippedTable.AddColumn("Slot");
-            equippedTable.AddColumn("Item");
-            equippedTable.AddColumn("Stats");
-            equippedTable.AddColumn("Durability");
-            equippedTable.AddColumn("Lvl");
-            equippedTable.AddColumn("Price");
+            equippedTable.AddColumn("[yellow]Slot[/]");
+            equippedTable.AddColumn("[yellow]Item[/]");
+            equippedTable.AddColumn("[yellow]Stats[/]");
+            equippedTable.AddColumn("[yellow]Durability[/]");
+            equippedTable.AddColumn("[yellow]Lvl[/]");
+            equippedTable.AddColumn("[yellow]Price[/]");
 
             var weapon = EquippedItems.OfType<Weapon>().FirstOrDefault();
             var armor = EquippedItems.OfType<Armor>().FirstOrDefault();
@@ -216,12 +213,12 @@ namespace ConsoleRpg.Characters
             // Envanter tablosu
             var inventoryTable = new Table().RoundedBorder();
             inventoryTable.Title("[blue]Inventory[/]");
-            inventoryTable.AddColumn("Name");
-            inventoryTable.AddColumn("Type");
-            inventoryTable.AddColumn("Details");
-            inventoryTable.AddColumn("Durability");
-            inventoryTable.AddColumn("Lvl");
-            inventoryTable.AddColumn("Price");
+            inventoryTable.AddColumn("[yellow]Name[/]");
+            inventoryTable.AddColumn("[yellow]Type[/]");
+            inventoryTable.AddColumn("[yellow]Details[/]");
+            inventoryTable.AddColumn("[yellow]Durability[/]");
+            inventoryTable.AddColumn("[yellow]Lvl[/]");
+            inventoryTable.AddColumn("[yellow]Price[/]");
 
             foreach (var item in Inventory)
             {

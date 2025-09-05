@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Xml.Linq;
 using ConsoleRpg.Characters;
 using ConsoleRpg.Characters.Npcs;
 using ConsoleRpg.Inventory;
@@ -100,10 +101,14 @@ namespace ConsoleRpg
                     Console.Clear();
                     return;
                 }
+                var selectedItem = npc.Inventory.FirstOrDefault((i) => i.Name == choice);
                 player.Buy(
-                    npc.Inventory.FirstOrDefault((i) => i.Name == choice)
+                    selectedItem
                         ?? throw new ArgumentNullException("Item not found in NPC inventory."),
                     npc
+                );
+                AnsiConsole.MarkupLine(
+                    $"[green]{player.Name} bought [yellow slowblink]{selectedItem.Name}[/] from {npc.Name} for [yellow slowblink]{selectedItem.Price}[/] golds.[/]"
                 );
             }
         }
@@ -125,10 +130,14 @@ namespace ConsoleRpg
                     Console.Clear();
                     return;
                 }
+                var selectedItem = player.Inventory.FirstOrDefault((i) => i.Name == choice);
                 player.Sell(
-                    player.Inventory.FirstOrDefault((i) => i.Name == choice)
+                    selectedItem
                         ?? throw new ArgumentNullException("Item not found in player inventory."),
                     npc
+                );
+                AnsiConsole.MarkupLine(
+                    $"[green]{player.Name} sold [underline]{selectedItem.Name}[/] to {npc.Name} for {selectedItem.Price} golds.[/]"
                 );
             }
         }

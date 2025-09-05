@@ -307,66 +307,47 @@ namespace ConsoleRpg
             AnsiConsole.MarkupLine("");
             while (true)
             {
+                List<string> locArr = Locations
+                    .Select(loc => $"{loc.Name}  ({loc.Danger})")
+                    .ToList();
+                locArr.Add("Return To Town Center");
+
                 var choice = AnsiConsole.Prompt(
                     new SelectionPrompt<string>()
                         .Title("[blue italic]Where do you want to go?[/]")
                         .PageSize(7)
-                        .AddChoices(
-                            new[]
-                            {
-                                "Return To Town Center",
-                                "Elderglen Forest",
-                                "Frostveil Peaks",
-                                "Ashen Wastes",
-                                "Miredeep Swamp",
-                            }
-                        )
+                        .AddChoices(locArr)
                 );
                 Console.Clear();
-                switch (choice)
+
+                // Handling the user's choice.
+                if (choice == "Return To Town Center")
                 {
-                    case "Return To Town Center":
-                        CurrentPlayer.Travel(
-                            Locations.FirstOrDefault((loc) => loc.Name == "Newhaven")
-                                ?? throw new ArgumentNullException("location is null")
-                        );
+                    CurrentPlayer.Travel(
+                        Locations.FirstOrDefault(loc => loc.Name == "Newhaven")
+                            ?? throw new ArgumentNullException("location is null")
+                    );
 
-                        ShowCityMenu();
-                        return;
-                    case "Elderglen Forest":
-                        CurrentPlayer.Travel(
-                            Locations.FirstOrDefault((loc) => loc.Name == "Elderglen Forest")
-                                ?? throw new ArgumentException("Location not found.")
-                        );
+                    ShowCityMenu();
+                    return;
+                }
+                else
+                {
+                    string selectedLocationName = choice.Split("  ")[0];
+                    Location? selectedLocation = Locations.FirstOrDefault(loc =>
+                        loc.Name == selectedLocationName
+                    );
 
+                    if (selectedLocation != null)
+                    {
+                        CurrentPlayer.Travel(selectedLocation);
                         AdventureMenu();
                         return;
-                    case "Frostveil Peaks":
-                        CurrentPlayer.Travel(
-                            Locations.FirstOrDefault((loc) => loc.Name == "Frostveil Peaks")
-                                ?? throw new ArgumentNullException("location is null")
-                        );
-
-                        AdventureMenu();
-                        return;
-                    case "Ashen Wastes":
-                        CurrentPlayer.Travel(
-                            Locations.FirstOrDefault((loc) => loc.Name == "Ashen Wastes")
-                                ?? throw new ArgumentNullException("location is null")
-                        );
-
-                        AdventureMenu();
-                        return;
-                    case "Miredeep Swamp":
-                        CurrentPlayer.Travel(
-                            Locations.FirstOrDefault((loc) => loc.Name == "Miredeep Swamp")
-                                ?? throw new ArgumentNullException("location is null")
-                        );
-
-                        AdventureMenu();
-                        return;
-                    default:
-                        return;
+                    }
+                    else
+                    {
+                        AnsiConsole.MarkupLine("[red]Invalid choice, try again.[/]");
+                    }
                 }
             }
         }
@@ -524,7 +505,7 @@ namespace ConsoleRpg
                     "[blue italic]*The sage strikes his staff on the ground. A bright burst of light… the screen goes black.*[/]",
                     ctx =>
                     {
-                        Thread.Sleep(1000);
+                        Thread.Sleep(2000);
                         ctx.Status("[green]...[/]");
                         Thread.Sleep(1000);
                         ctx.Status("[green]...[/]");

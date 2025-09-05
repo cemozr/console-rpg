@@ -268,7 +268,7 @@ namespace ConsoleRpg.Characters
             AnsiConsole.Write(inventoryTable);
             AnsiConsole.MarkupLine("");
             AnsiConsole.MarkupLine(
-                $"[yellow]Gold: {Gold} | Level: {Lvl} | Health: [red]{Health}/{MaxHealth}[/] | Attack: {Attack} | Armor: {Armor}[/]"
+                $"[yellow]Gold: {Gold} | Level: {Lvl} | Exp: {Exp} | Health: [red]{Health}/{MaxHealth}[/] | Attack: {Attack} | Armor: {Armor}[/]"
             );
             AnsiConsole.MarkupLine("");
             while (true)

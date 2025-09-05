@@ -255,11 +255,8 @@ namespace ConsoleRpg
                     switch (choice)
                     {
                         case "Check Your Bag":
-                            DialogHelper.StoryTellerDialog(
-                                "You open your bag and see the items you have collected so far."
-                            );
                             CurrentPlayer.ShowPlayerEquipmentAndInventory();
-                            DialogHelper.ContinueWithNextLine();
+                            AnsiConsole.Clear();
                             break;
 
                         case "Visit Blacksmith":
